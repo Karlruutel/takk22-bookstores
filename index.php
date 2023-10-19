@@ -29,7 +29,11 @@ $stmt = $pdo->query('SELECT * FROM books');
 while ($row = $stmt->fetch()) {
 ?>
 
-   <li><?= $row['title'] . "<br>"; ?></li>
+    <li>
+        <a href="book.php?id=<?= $row['id']; ?>">
+            <?= $row['title'] . "<br>"; ?>
+        </a>
+    </li>
 
 <?php
 }
