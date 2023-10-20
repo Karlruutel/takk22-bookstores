@@ -23,7 +23,7 @@ var_dump($book);
     <title>Document</title>
 </head>
 <body>
-    <h1><?$book["title"]?> </h1>    
+    <h1><?=$book["title"]?> </h1>    
     <span style="font-size 24px;">Aasta</span> <span style="font-size 32px;"><?=$book["release_date"] ?></span>
     <span style="font-size 24px;">Autorid</span>
 
