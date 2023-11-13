@@ -21,12 +21,12 @@ $stmt->execute(["id" => $id]);
     <title>Document</title>
 </head>
 <body>
-    <h1><?=$book["title"]?> </h1>    
-    <span style="font-size 24px;">Aasta</span> <span style="font-size 32px;"><?=$book["release_date"] ?></span>
-    <br>
-    <span style="font-size 24px;">Autorid</span>
+<h1><?= $book["title"]; ?></h1>
+    <span style="font-size: 24px;">Aasta</span>
+    <span stle="font-size: 32px"><?= $book["release_date"]; ?></span>
+    <span style="font-size: 24px";>Autorid</span>
 
-    <ul>
+    <ol>
 
     <?php
     while ($row = $stmt->fetch()) {
@@ -39,7 +39,7 @@ $stmt->execute(["id" => $id]);
     <?php
     }
     ?>
-    </ul>
+    </ol>
 
     <a href="./edit.php">Muuda</a>
 
