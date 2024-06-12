@@ -1,15 +1,15 @@
 <?php
 
-require_once("connect.php");
+require_once('./connection.php');
 
-$id = $_GET["id"];
+$id = $_GET['id'];
 
 $stmt = $pdo->prepare('SELECT * FROM books WHERE id = :id');
-$stmt->execute(["id" => $id]);
+$stmt->execute(['id' => $id]);
 $book = $stmt->fetch();
 
-$stmt = $pdo->prepare('SELECT * FROM book_authors ba LEFT JOIN authors a ON  ba.author_id=a.id WHERE book_id = :id');
-$stmt->execute(["id" => $id]);
+$stmt = $pdo->prepare('SELECT * FROM book_authors ba LEFT JOIN authors a ON a.id=ba.author_id WHERE book_id=:book_id;');
+$stmt->execute(['book_id' => $id]);
 
 ?>
 
@@ -18,30 +18,28 @@ $stmt->execute(["id" => $id]);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?= $book['title']; ?></title>
 </head>
 <body>
-<h1><?= $book["title"]; ?></h1>
-    <span style="font-size: 24px;">Aasta</span>
-    <span stle="font-size: 32px"><?= $book["release_date"]; ?></span>
-    <span style="font-size: 24px";>Autorid</span>
+    <h1><?= $book['title']; ?></h1>
+    <ul>
 
-    <ol>
+<?php
+    while ( $author = $stmt->fetch() ) {
+?>
 
-    <?php
-    while ($row = $stmt->fetch()) {
-    ?>
+        <li><?= $author['first_name']; ?> <?= $author['last_name']; ?></li>
 
-        <li>
-            <?= $row['first_name'];?> <?= $row["last_name"];?>
-        </li>
-
-    <?php
+<?php
     }
-    ?>
-    </ol>
+?>
+    </ul>
+    <img src="<?= $book['cover_path']; ?>">
+    <p>Hind: <?= round($book['price'], 2); ?> €</p>
 
-    <a href="./edit.php">Muuda</a>
-
+    <form action="delete.php" method="post" id="delete">
+        <input type="hidden" name="id" value="<?= $id; ?>">
+        <button form="delete">Kustuta</button>
+    </form>
 </body>
 </html>
